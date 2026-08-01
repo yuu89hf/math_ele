@@ -18,7 +18,6 @@ export function initMath2App() {
     const divisionForm = document.getElementById('divisionForm');
     const dividendInput = document.getElementById('dividendInput');
     const divisorInput = document.getElementById('divisorInput');
-    const modeCards = document.querySelectorAll('.radio-card');
     
     const interactiveStepBox = document.getElementById('interactiveStepBox');
     const stepCounterBadge = document.getElementById('stepCounterBadge');
@@ -32,8 +31,6 @@ export function initMath2App() {
     const hintBtn = document.getElementById('hintBtn');
     const stepFeedback = document.getElementById('stepFeedback');
 
-    const autoControlsBox = document.getElementById('autoControlsBox');
-    const autoPlayPauseBtn = document.getElementById('autoPlayPauseBtn');
     const randomBtn = document.getElementById('randomBtn');
 
     const invalidDivisionWarning = document.getElementById('invalidDivisionWarning');
@@ -45,7 +42,6 @@ export function initMath2App() {
     const soundToggleBtn = document.getElementById('soundToggleBtn');
     const bgmToggleBtn = document.getElementById('bgmToggleBtn');
 
-    const resetVictoryBtn = document.getElementById('resetVictoryBtn');
     const closeVictoryBtn = document.getElementById('closeVictoryBtn');
 
     const panelControlSection = document.getElementById('panelControlSection');
@@ -54,17 +50,8 @@ export function initMath2App() {
     const mobileTabPaper = document.getElementById('mobileTabPaper');
 
     if (!divisionForm || !dividendInput || !divisorInput) {
-        return; // Not on Math2 page
+        return; // Not on Pembagian page
     }
-
-    let currentMode = 'interactive';
-    let autoPlayer = {
-        timer: null,
-        isPlaying: false,
-        steps: [],
-        currentIndex: 0,
-        speed: 2500
-    };
 
     function checkCleanDivision(dividend, divisor) {
         if (divisor <= 0) return true;
@@ -89,8 +76,6 @@ export function initMath2App() {
     }
 
     function initProblem() {
-        stopAutoPlay();
-
         let dividend = parseInt(dividendInput.value, 10);
         let divisor = parseInt(divisorInput.value, 10);
 
@@ -101,16 +86,7 @@ export function initMath2App() {
 
         engine.reset(dividend, divisor);
         visualizer.initBoard(dividend, divisor);
-
-        if (currentMode === 'interactive') {
-            if (interactiveStepBox) interactiveStepBox.classList.remove('hidden');
-            if (autoControlsBox) autoControlsBox.classList.add('hidden');
-            updateInteractiveBox();
-        } else {
-            if (interactiveStepBox) interactiveStepBox.classList.add('hidden');
-            if (autoControlsBox) autoControlsBox.classList.remove('hidden');
-            prepareAutoSolution();
-        }
+        updateInteractiveBox();
     }
 
     function updateInteractiveBox() {
@@ -170,58 +146,10 @@ export function initMath2App() {
 
         if (res.isFinished) {
             soundFx.playVictory();
-            visualizer.showVictory(engine.dividend, engine.divisor, res.totalQuotient, engine.steps.length, 0, 'interactive');
+            visualizer.showVictory(engine.dividend, engine.divisor, res.totalQuotient);
         }
 
         updateInteractiveBox();
-    }
-
-    function prepareAutoSolution() {
-        const fullSol = engine.generateFullSolution();
-        autoPlayer.steps = fullSol.steps;
-        autoPlayer.currentIndex = 0;
-        startAutoPlay();
-    }
-
-    function startAutoPlay() {
-        autoPlayer.isPlaying = true;
-        if (autoPlayPauseBtn) autoPlayPauseBtn.innerHTML = `<i data-lucide="pause" class="w-3.5 h-3.5"></i> Pause`;
-        if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-
-        if (autoPlayer.timer) clearInterval(autoPlayer.timer);
-
-        autoPlayer.timer = setInterval(() => {
-            if (!autoPlayer.isPlaying) return;
-
-            if (autoPlayer.currentIndex >= autoPlayer.steps.length) {
-                stopAutoPlay();
-                soundFx.playVictory();
-                const totalQuotient = engine.generateFullSolution().totalQuotient;
-                visualizer.showVictory(engine.dividend, engine.divisor, totalQuotient, autoPlayer.steps.length, 0, 'auto');
-                return;
-            }
-
-            const step = autoPlayer.steps[autoPlayer.currentIndex];
-            engine.quotientParts.push(step.multiplier);
-            const isLast = autoPlayer.currentIndex === autoPlayer.steps.length - 1;
-
-            soundFx.playStepSuccess();
-            visualizer.renderQuotientParts(engine.quotientParts, isLast);
-            visualizer.renderStepRow(step, isLast);
-            visualizer.addExplanation(step);
-
-            autoPlayer.currentIndex++;
-        }, autoPlayer.speed);
-    }
-
-    function stopAutoPlay() {
-        autoPlayer.isPlaying = false;
-        if (autoPlayer.timer) {
-            clearInterval(autoPlayer.timer);
-            autoPlayer.timer = null;
-        }
-        if (autoPlayPauseBtn) autoPlayPauseBtn.innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5"></i> Putar`;
-        if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
     }
 
     // Event Listeners
@@ -275,40 +203,6 @@ export function initMath2App() {
         });
     }
 
-    modeCards.forEach(card => {
-        card.addEventListener('click', () => {
-            soundFx.playClick();
-            modeCards.forEach(c => c.classList.remove('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/40'));
-            card.classList.add('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/40');
-            
-            const radio = card.querySelector('input[type="radio"]');
-            if (radio) {
-                radio.checked = true;
-                currentMode = radio.value;
-                initProblem();
-            }
-        });
-    });
-
-    if (autoPlayPauseBtn) {
-        autoPlayPauseBtn.addEventListener('click', () => {
-            soundFx.playClick();
-            if (autoPlayer.isPlaying) {
-                stopAutoPlay();
-            } else {
-                startAutoPlay();
-            }
-        });
-    }
-
-    if (resetVictoryBtn) {
-        resetVictoryBtn.addEventListener('click', () => {
-            soundFx.playClick();
-            visualizer.hideVictory();
-            initProblem();
-        });
-    }
-
     if (closeVictoryBtn) {
         closeVictoryBtn.addEventListener('click', () => {
             soundFx.playClick();
@@ -357,6 +251,5 @@ export function initMath2App() {
         });
     }
 
-    // Initialize first state
     initProblem();
 }

@@ -8,7 +8,7 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Comic Neue', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', 'Comic Neue', ui-sans-serif, system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
 
     --color-brand-500: #6366f1;
@@ -17,17 +17,32 @@
 }
 
 body {
-    font-family: 'Comic Neue', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Comic Neue', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom Paper Pattern Background for Canvas */
+.bg-grid-pattern {
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(to right, rgba(203, 213, 225, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(203, 213, 225, 0.25) 1px, transparent 1px);
+}
+
+.dark .bg-grid-pattern {
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(to right, rgba(51, 65, 85, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51, 65, 85, 0.3) 1px, transparent 1px);
 }
 
 /* Animations for Step & Porogapit Calculator */
 @keyframes stepRowEntrance {
-    0% { opacity: 0; transform: translateY(-15px) scale(0.95); }
+    0% { opacity: 0; transform: translateY(-12px) scale(0.96); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes productGlow {
-    0% { opacity: 0; transform: translateY(-8px); text-shadow: 0 0 10px rgba(147, 51, 234, 0.6); }
+    0% { opacity: 0; transform: translateY(-6px); text-shadow: 0 0 12px rgba(99, 102, 241, 0.5); }
     100% { opacity: 1; transform: translateY(0); text-shadow: none; }
 }
 
@@ -42,7 +57,7 @@ body {
 }
 
 @keyframes popRemainder {
-    0% { opacity: 0; transform: scale(0.8); }
+    0% { opacity: 0; transform: scale(0.85); }
     100% { opacity: 1; transform: scale(1); }
 }
 
@@ -93,11 +108,11 @@ body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.4);
+    background: rgba(148, 163, 184, 0.35);
     border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 116, 139, 0.6);
+    background: rgba(100, 116, 139, 0.55);
 }
 
 button, [type='button'], [type='reset'], [type='submit'] {
