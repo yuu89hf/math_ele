@@ -1,59 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧮 Math Studio - Platform Pembelajaran Matematika SD Interaktif
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Math Studio** adalah aplikasi web interaktif berbasis **Laravel 12** yang dirancang khusus untuk membantu siswa Sekolah Dasar (SD) memahami konsep dasar matematika melalui visualisasi dinamis, animasi *step-by-step*, dan media pembelajaran interaktif.
 
-## About Laravel
+Aplikasi ini beroperasi **100% tanpa memerlukan database (database-free)**, tanpa skor/poin persaingan, berfokus murni pada pemahaman visual, serta mendukung tampilan **Light Theme** bawaan yang ramah mobile dan elegan.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌟 Modul Pembelajaran utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. 🌿 Modul 01: Studio FPB & KPK (`/fpbkpk`)
+- **Visualisasi Pohon Faktor Dahan**: Diagram faktorisasi prima bercabang simetris (Authentic Factor Tree).
+- **2 Target Perhitungan**:
+  - 🛡️ **Target FPB**: Menghitung Faktor Persekutuan Terbesar $\text{FPB}(a, b)$ dan memberi penanda warna hijau emerald pada eksponen terkecil.
+  - ⚡ **Target KPK**: Menghitung Kelipatan Persekutuan Terkecil $\text{KPK}(a, b)$ dan memberi penanda warna ungu pada eksponen terbesar.
+- **Faktorisasi Prima Lengkap**: Menampilkan persamaan perkalian lengkap (misal $24 = 2 \times 2 \times 2 \times 3$) dan bentuk eksponen ($24 = 2^3 \times 3$).
+- **High-Contrast Color Highlighting**: Penandaan angka eksponen yang "menang" diambil menggunakan murni blok warna berpendar tanpa teks label berantakan.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 2. ➗ Modul 02: Studio Pembagian Porogapit (`/pembagian`)
+- **Pembagian Bersusun (Porogapit)**: Visualisasi papan tulis digital dengan animasi garis pembagian dan pengurangan bertahap.
+- **Panduan Pengali Ramah**: Membantu siswa menentukan pengali bersahabat (seperti $10, 5, 2, 1$).
+- **Selebrasi Kemenangan**: Modal perayaan interaktif dengan tombol "Tutup" sederhana tanpa perhitungan skor persaingan.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 3. ➖ Modul 03: Studio Pengurangan Bersusun (`/pengurangan`)
+- **Teknik Meminjam (Regrouping)**: Visualisasi pengurangan bersusun ke bawah untuk soal-soal seperti $27 - 9 = 18$.
+- **Animasi Soft Blur & Morphing**:
+  - Angka puluhan yang dipinjam ($2$) dan angka satuan yang menerima ($7$) secara otomatis di-blur halus dan memudar ke latar belakang.
+  - Badge angka baru hasil meminjam ($1$ merah dan $17$ hijau) muncul secara stabil dan tegas di atasnya.
+- **Urutan Langkah Mikro & Penjelasan Logika**:
+  - Setiap klik tombol **"Langkah Berikutnya"** menjalankan 1 mikro-langkah berurutan tanpa lompat-lompat.
+  - Dilengkapi kotak penjelasan logika matematika transparan yang menjelaskan alasan dan perubahan nilai angka.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 📱 Fitur Unggulan UX & Mobile
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Mobile First & Navigasi Responsif**:
+  - **Drawer Navigasi Halaman (🍔 Hamburger Left)**: Pindah halaman antara Menu Utama, FPB & KPK, Pembagian, dan Pengurangan.
+  - **Tombol Sakelar Tampilan (📑 Right Switcher)**: Beralih instan antara panel **Kontrol & Soal** dan **Papan Visual** di HP.
+  - **Default Tampilan HP**: Dimulai dari panel **Kontrol & Soal** dan otomatis meluncur ke **Papan Visual** saat tombol aksi ditekan.
+- **Sintesis Audio Web (Web Audio API)**:
+  - Efek suara interaktif (SFX) klik, langkah sukses, meminjam, dan selebrasi tanpa ketergantungan file MP3 eksternal.
+  - Musik latar (*Pentatonic Ambient BGM*) yang lembut dan menenangkan.
+- **Desain Modern Light Theme**:
+  - Menggunakan Tailwind CSS v4, font *Plus Jakarta Sans*, gradien warna vibran, dan latar belakang pola kertas grid (*grid pattern paper*).
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Panduan Jalankan Aplikasi Secara Lokal
 
-## Code of Conduct
+### Persyaratan Sistem:
+- PHP >= 8.2
+- Composer
+- Node.js & NPM (Opsional untuk asset bundling)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Langkah Instalasi:
 
-## Security Vulnerabilities
+1. **Clone / Buka Direktori Project**:
+   ```bash
+   cd math_ele
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Install Dependensi Composer**:
+   ```bash
+   composer install
+   ```
 
-## License
+3. **Salin File Environment**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **Jalankan Server Lokal Laravel**:
+   ```bash
+   php artisan serve
+   ```
+   Akses aplikasi melalui peramban web di: `http://localhost:8000`
+
+---
+
+## 🛠️ Struktur Direktori Utama
+
+```
+math_ele/
+├── app/
+├── config/
+├── public/
+├── resources/
+│   ├── css/
+│   │   └── app.css (Tailwind CSS v4 & custom animations)
+│   ├── js/
+│   │   ├── fpbkpk/ (Module JS FPB & KPK)
+│   │   ├── math2/  (Module JS Pembagian Porogapit & Synthesizer Audio)
+│   │   ├── pengurangan/ (Module JS Pengurangan Bersusun)
+│   │   └── app.js (Main Entrypoint)
+│   └── views/
+│       ├── components/
+│       │   ├── layout/
+│       │   ├── math/ (Control Panel & Visual Canvas Components)
+│       │   ├── header.blade.php
+│       │   └── mobile-tabs.blade.php
+│       ├── welcome.blade.php (Selection Hub Portal)
+│       ├── fpbkpk.blade.php
+│       ├── pembagian.blade.php
+│       └── pengurangan.blade.php
+└── routes/
+    └── web.php (Dynamic Web Routes)
+```
+
+---
+
+## 📄 Lisensi
+
+Project ini dirilis di bawah lisensi [MIT License](LICENSE).

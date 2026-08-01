@@ -23,6 +23,11 @@ Route::get('/pembagian', function () {
     return view('pembagian');
 })->name('pembagian');
 
+// Pengurangan Bersusun Interactive Studio
+Route::get('/pengurangan', function () {
+    return view('pengurangan');
+})->name('pengurangan');
+
 // Legacy alias redirect
 Route::get('/math2', function () {
     return redirect()->route('pembagian');

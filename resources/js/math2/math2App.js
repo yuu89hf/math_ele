@@ -55,7 +55,7 @@ export function initMath2App() {
         return; // Not on Pembagian page
     }
 
-    let activeMobileTab = 'paper'; // Default starts at Papan Visual
+    let activeMobileTab = 'control'; // Starts at Kontrol & Soal on Mobile
 
     function setMobileView(view) {
         activeMobileTab = view;
@@ -284,7 +284,7 @@ export function initMath2App() {
         setMobileView(activeMobileTab);
     });
 
-    // Start with Papan Visual active on mobile when page loads
-    setMobileView('paper');
+    // Start with Kontrol & Soal active on mobile when page loads
+    setMobileView('control');
     initProblem();
 }

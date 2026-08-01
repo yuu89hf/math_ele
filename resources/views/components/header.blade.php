@@ -19,10 +19,13 @@
                 <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Menu Utama
             </a>
             <a href="{{ route('fpbkpk') }}" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer {{ request()->routeIs('fpbkpk') ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> FPB & KPK
+                <i data-lucide="git-fork" class="w-3.5 h-3.5 text-emerald-500"></i> FPB & KPK
             </a>
             <a href="{{ route('pembagian') }}" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer {{ request()->routeIs('pembagian') ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 <i data-lucide="divide" class="w-3.5 h-3.5 text-purple-500"></i> Studio Pembagian
+            </a>
+            <a href="{{ route('pengurangan') }}" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer {{ request()->routeIs('pengurangan') ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
+                <i data-lucide="minus" class="w-3.5 h-3.5 text-rose-500"></i> Studio Pengurangan
             </a>
         </nav>
     </div>
@@ -86,13 +89,19 @@
             </a>
             <a href="{{ route('fpbkpk') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('fpbkpk') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
                 <div class="flex items-center gap-3">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Studio FPB & KPK
+                    <i data-lucide="git-fork" class="w-4 h-4 text-emerald-500"></i> Studio FPB & KPK
                 </div>
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
             <a href="{{ route('pembagian') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('pembagian') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
                 <div class="flex items-center gap-3">
                     <i data-lucide="divide" class="w-4 h-4 text-purple-500"></i> Studio Pembagian
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+            <a href="{{ route('pengurangan') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('pengurangan') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="minus" class="w-4 h-4 text-rose-500"></i> Studio Pengurangan
                 </div>
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
