@@ -19,8 +19,43 @@ export function initFPBKPKApp() {
     let visualMethod = 'sengkedan'; // 'sengkedan', 'pohon', 'garis', 'venn'
     let currentNumbers = [24, 36];
     let isSfxEnabled = true;
+    let activeMobileTab = 'control';
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const panelControlSection = document.getElementById('fpbControlSection');
+    const panelCanvasSection = document.getElementById('fpbCanvasSection');
+    const mobileTabControl = document.getElementById('mobileTabControl');
+    const mobileTabPaper = document.getElementById('mobileTabPaper');
+    const rightViewSwitcherBtn = document.getElementById('rightViewSwitcherBtn');
+    const rightViewText = document.getElementById('rightViewText');
+
+    function setMobileView(view) {
+        activeMobileTab = view;
+        const isMobile = window.innerWidth < 1024;
+
+        if (!isMobile) {
+            if (panelControlSection) panelControlSection.classList.remove('hidden');
+            if (panelCanvasSection) panelCanvasSection.classList.remove('hidden');
+            return;
+        }
+
+        if (view === 'control') {
+            if (panelControlSection) panelControlSection.classList.remove('hidden');
+            if (panelCanvasSection) panelCanvasSection.classList.add('hidden');
+            
+            if (mobileTabControl) mobileTabControl.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (mobileTabPaper) mobileTabPaper.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (rightViewText) rightViewText.textContent = "Papan";
+        } else {
+            if (panelControlSection) panelControlSection.classList.add('hidden');
+            if (panelCanvasSection) panelCanvasSection.classList.remove('hidden');
+            
+            if (mobileTabPaper) mobileTabPaper.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (mobileTabControl) mobileTabControl.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (rightViewText) rightViewText.textContent = "Kontrol";
+        }
+    }
 
     function playSFX(freq = 440, type = 'sine', duration = 0.15) {
         if (!isSfxEnabled) return;
@@ -242,8 +277,8 @@ export function initFPBKPKApp() {
                         <i data-lucide="info" class="w-4 h-4 text-indigo-500"></i> Kesimpulan Tabel Sengkedan:
                     </span>
                     <div class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
-                        <div>• <strong>FPB:</strong> Perkalian pembagi prima yang membagi <em>seluruh angka sekaligus</em> (berlabel FPB) = <span class="font-mono font-extrabold text-indigo-600 dark:text-indigo-400 text-sm px-1.5 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 rounded-md">${gcdVal}</span></div>
-                        <div>• <strong>KPK:</strong> Perkalian <em>seluruh pembagi prima</em> dari baris awal sampai menghasilkan 1 = <span class="font-mono font-extrabold text-purple-600 dark:text-purple-400 text-sm px-1.5 py-0.5 bg-purple-100 dark:bg-purple-900/60 rounded-md">${lcmVal}</span></div>
+                        <div>• <strong>FPB:</strong> Perkalian pembagi prima yang membagi <em>seluruh angka sekaligus</em> = <span class="font-mono font-extrabold text-indigo-600 dark:text-indigo-400 text-sm px-1.5 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 rounded-md">${gcdVal}</span></div>
+                        <div>• <strong>KPK:</strong> Perkalian <em>seluruh pembagi prima</em> sampai bernilai 1 = <span class="font-mono font-extrabold text-purple-600 dark:text-purple-400 text-sm px-1.5 py-0.5 bg-purple-100 dark:bg-purple-900/60 rounded-md">${lcmVal}</span></div>
                     </div>
                 </div>
             </div>
@@ -352,19 +387,15 @@ export function initFPBKPKApp() {
                     <!-- SVG Diagram Venn Overlapping Set -->
                     <div class="relative w-full max-w-sm h-48 flex items-center justify-center">
                         <svg viewBox="0 0 400 200" class="w-full h-full">
-                            <!-- Left Circle (Set A) -->
                             <circle cx="150" cy="100" r="85" fill="rgba(99, 102, 241, 0.15)" stroke="#6366f1" stroke-width="3" />
-                            <!-- Right Circle (Set B) -->
                             <circle cx="250" cy="100" r="85" fill="rgba(244, 63, 94, 0.15)" stroke="#f43f5e" stroke-width="3" />
                             
-                            <!-- Labels -->
                             <text x="100" y="95" font-size="14" font-weight="800" fill="#4f46e5" text-anchor="middle">Angka #${nums[0]}</text>
                             <text x="100" y="115" font-size="16" font-weight="800" fill="#1e293b" text-anchor="middle">${nums[0]}</text>
 
                             <text x="300" y="95" font-size="14" font-weight="800" fill="#e11d48" text-anchor="middle">Angka #${nums[1] || nums[0]}</text>
                             <text x="300" y="115" font-size="16" font-weight="800" fill="#1e293b" text-anchor="middle">${nums[1] || nums[0]}</text>
 
-                            <!-- Intersection FPB -->
                             <text x="200" y="90" font-size="12" font-weight="800" fill="#9333ea" text-anchor="middle">Irisan (FPB)</text>
                             <text x="200" y="118" font-size="22" font-weight="900" fill="#7e22ce" text-anchor="middle">${gcdVal}</text>
                         </svg>
@@ -426,6 +457,25 @@ export function initFPBKPKApp() {
         }
     });
 
+    // Mobile Navigation & View Switching
+    if (mobileTabControl && mobileTabPaper) {
+        mobileTabControl.addEventListener('click', () => setMobileView('control'));
+        mobileTabPaper.addEventListener('click', () => setMobileView('paper'));
+    }
+
+    if (rightViewSwitcherBtn) {
+        rightViewSwitcherBtn.addEventListener('click', () => {
+            playSFX(440);
+            setMobileView(activeMobileTab === 'control' ? 'paper' : 'control');
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        setMobileView(activeMobileTab);
+    });
+
+    // Start with Kontrol & Soal active on mobile
+    setMobileView('control');
     renderDynamicInputs();
     runCalculator();
 }

@@ -41,10 +41,4 @@
 
     </div>
 
-    <!-- Step Explanation Log -->
-    <div class="h-28 shrink-0 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 overflow-y-auto flex flex-col gap-1.5" id="explanationList">
-        <div class="p-2 bg-white dark:bg-slate-900 rounded-lg text-xs border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold">
-            Siap menghitung pembagian.
-        </div>
-    </div>
 </section>

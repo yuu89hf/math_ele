@@ -65,4 +65,11 @@
 
         <div id="stepFeedback" class="text-[11px] font-semibold min-h-[16px]"></div>
     </div>
+
+    <!-- Step Explanation Log -->
+    <div class="flex-1 min-h-[120px] max-h-[220px] bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-y-auto flex flex-col gap-1.5 shadow-inner" id="explanationList">
+        <div class="p-2 bg-white dark:bg-slate-900 rounded-lg text-xs border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold">
+            Siap menghitung pembagian.
+        </div>
+    </div>
 </section>

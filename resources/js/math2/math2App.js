@@ -48,9 +48,40 @@ export function initMath2App() {
     const panelPaperSection = document.getElementById('panelPaperSection');
     const mobileTabControl = document.getElementById('mobileTabControl');
     const mobileTabPaper = document.getElementById('mobileTabPaper');
+    const rightViewSwitcherBtn = document.getElementById('rightViewSwitcherBtn');
+    const rightViewText = document.getElementById('rightViewText');
 
     if (!divisionForm || !dividendInput || !divisorInput) {
         return; // Not on Pembagian page
+    }
+
+    let activeMobileTab = 'paper'; // Default starts at Papan Visual
+
+    function setMobileView(view) {
+        activeMobileTab = view;
+        const isMobile = window.innerWidth < 1024;
+
+        if (!isMobile) {
+            if (panelControlSection) panelControlSection.classList.remove('hidden');
+            if (panelPaperSection) panelPaperSection.classList.remove('hidden');
+            return;
+        }
+
+        if (view === 'control') {
+            if (panelControlSection) panelControlSection.classList.remove('hidden');
+            if (panelPaperSection) panelPaperSection.classList.add('hidden');
+            
+            if (mobileTabControl) mobileTabControl.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (mobileTabPaper) mobileTabPaper.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (rightViewText) rightViewText.textContent = "Papan";
+        } else {
+            if (panelControlSection) panelControlSection.classList.add('hidden');
+            if (panelPaperSection) panelPaperSection.classList.remove('hidden');
+            
+            if (mobileTabPaper) mobileTabPaper.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (mobileTabControl) mobileTabControl.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition cursor-pointer";
+            if (rightViewText) rightViewText.textContent = "Kontrol";
+        }
     }
 
     function checkCleanDivision(dividend, divisor) {
@@ -106,7 +137,6 @@ export function initMath2App() {
 
         if (userMultiplierInput) {
             userMultiplierInput.value = '';
-            userMultiplierInput.focus();
         }
         if (multiplierResultPreview) multiplierResultPreview.textContent = '?';
         if (userSubResult) userSubResult.textContent = '0';
@@ -143,6 +173,9 @@ export function initMath2App() {
         visualizer.renderQuotientParts(engine.quotientParts, res.isFinished);
         visualizer.renderStepRow(res.step, res.isFinished);
         visualizer.addExplanation(res.step);
+
+        // Auto transition to Papan Visual on mobile after clicking Kurangkan
+        setMobileView('paper');
 
         if (res.isFinished) {
             soundFx.playVictory();
@@ -234,22 +267,24 @@ export function initMath2App() {
         });
     }
 
-    // Mobile Navigation Tabs
+    // Mobile Navigation & View Switching
     if (mobileTabControl && mobileTabPaper) {
-        mobileTabControl.addEventListener('click', () => {
-            if (panelControlSection) panelControlSection.classList.remove('hidden');
-            if (panelPaperSection) panelPaperSection.classList.add('hidden');
-            mobileTabControl.classList.add('bg-white', 'dark:bg-slate-800', 'shadow-xs', 'text-indigo-600');
-            mobileTabPaper.classList.remove('bg-white', 'dark:bg-slate-800', 'shadow-xs', 'text-indigo-600');
-        });
+        mobileTabControl.addEventListener('click', () => setMobileView('control'));
+        mobileTabPaper.addEventListener('click', () => setMobileView('paper'));
+    }
 
-        mobileTabPaper.addEventListener('click', () => {
-            if (panelControlSection) panelControlSection.classList.add('hidden');
-            if (panelPaperSection) panelPaperSection.classList.remove('hidden');
-            mobileTabPaper.classList.add('bg-white', 'dark:bg-slate-800', 'shadow-xs', 'text-indigo-600');
-            mobileTabControl.classList.remove('bg-white', 'dark:bg-slate-800', 'shadow-xs', 'text-indigo-600');
+    if (rightViewSwitcherBtn) {
+        rightViewSwitcherBtn.addEventListener('click', () => {
+            soundFx.playClick();
+            setMobileView(activeMobileTab === 'control' ? 'paper' : 'control');
         });
     }
 
+    window.addEventListener('resize', () => {
+        setMobileView(activeMobileTab);
+    });
+
+    // Start with Papan Visual active on mobile when page loads
+    setMobileView('paper');
     initProblem();
 }

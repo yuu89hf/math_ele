@@ -1,7 +1,7 @@
-<header class="w-full flex items-center justify-between gap-3 p-2.5 sm:p-3.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm shrink-0 mb-3 relative z-30">
+<header class="w-full flex items-center justify-between gap-2.5 p-2.5 sm:p-3.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm shrink-0 mb-3 relative z-30">
     <!-- Brand Logo & Nav Tabs -->
     <div class="flex items-center gap-3 sm:gap-5 overflow-x-auto">
-        <a href="{{ route('portal') }}" class="flex items-center gap-2.5 font-extrabold text-sm sm:text-base text-indigo-600 dark:text-indigo-400 shrink-0 group">
+        <a href="{{ route('portal') }}" class="flex items-center gap-2 font-extrabold text-sm sm:text-base text-indigo-600 dark:text-indigo-400 shrink-0 group">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform">
                 <i data-lucide="calculator" class="w-5 h-5"></i>
             </div>
@@ -27,7 +27,7 @@
         </nav>
     </div>
 
-    <!-- Quick Audio & Theme Control Actions (Desktop + Mobile Hamburger) -->
+    <!-- Right Controls: Audio + Page Burger + View Switcher -->
     <div class="flex items-center gap-1.5 shrink-0">
         <!-- BGM Toggle Button -->
         <button type="button" id="bgmToggleBtn" title="BGM Musik Latar" class="p-2 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition cursor-pointer active:scale-95">
@@ -45,14 +45,22 @@
             <i data-lucide="sun" class="w-4 h-4 inline dark:hidden text-amber-500"></i>
         </button>
 
-        <!-- Mobile Hamburger Button -->
-        <button type="button" id="hamburgerBtn" title="Menu Navigasi Mobile" class="sm:hidden p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-xl border border-indigo-200 dark:border-indigo-800 transition cursor-pointer active:scale-95">
+        @if(!request()->routeIs('portal'))
+            <!-- Mobile View Switcher Button (Right Burger for Kontrol vs Visual Canvas) -->
+            <button type="button" id="rightViewSwitcherBtn" title="Pindah Tampilan: Kontrol / Papan Visual" class="lg:hidden p-2 bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 rounded-xl border border-purple-200 dark:border-purple-800 transition cursor-pointer active:scale-95 flex items-center gap-1 font-bold text-xs">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+                <span id="rightViewText" class="text-[11px] hidden sm:inline">Papan</span>
+            </button>
+        @endif
+
+        <!-- Mobile Page Navigation Hamburger Button -->
+        <button type="button" id="hamburgerBtn" title="Pindah Halaman" class="sm:hidden p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-xl border border-indigo-200 dark:border-indigo-800 transition cursor-pointer active:scale-95">
             <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
     </div>
 </header>
 
-<!-- Mobile Navigation Drawer Modal -->
+<!-- Mobile Page Navigation Drawer Modal -->
 <div id="mobileMenuDrawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex flex-col justify-end sm:hidden transition-all duration-300">
     <div class="bg-white dark:bg-slate-900 border-t-2 border-indigo-500 rounded-t-3xl p-5 flex flex-col gap-4 shadow-2xl animate-step-row">
         
@@ -61,7 +69,7 @@
                 <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold">
                     <i data-lucide="calculator" class="w-4 h-4"></i>
                 </div>
-                <span class="font-extrabold text-sm text-slate-900 dark:text-white">Menu Navigasi</span>
+                <span class="font-extrabold text-sm text-slate-900 dark:text-white">Pindah Halaman</span>
             </div>
             <button type="button" id="closeMobileDrawerBtn" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg cursor-pointer font-bold text-base">
                 ✕
@@ -70,14 +78,23 @@
 
         <!-- Mobile Menu Nav Links -->
         <div class="flex flex-col gap-2">
-            <a href="{{ route('portal') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center gap-3 transition {{ request()->routeIs('portal') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
-                <i data-lucide="layout-grid" class="w-4 h-4"></i> Menu Utama (Portal)
+            <a href="{{ route('portal') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('portal') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i> Menu Utama (Portal)
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
-            <a href="{{ route('fpbkpk') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center gap-3 transition {{ request()->routeIs('fpbkpk') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
-                <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Studio FPB & KPK
+            <a href="{{ route('fpbkpk') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('fpbkpk') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> Studio FPB & KPK
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
-            <a href="{{ route('pembagian') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center gap-3 transition {{ request()->routeIs('pembagian') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
-                <i data-lucide="divide" class="w-4 h-4 text-purple-500"></i> Studio Pembagian
+            <a href="{{ route('pembagian') }}" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition {{ request()->routeIs('pembagian') ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200' }}">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="divide" class="w-4 h-4 text-purple-500"></i> Studio Pembagian
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
         </div>
 
