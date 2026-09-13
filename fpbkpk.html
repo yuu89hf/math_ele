@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio FPB & KPK - Visual Pohon Faktor</title>
+    <meta name="description" content="Visualisasi Pohon Faktor Interaktif untuk FPB dan KPK dengan pewarnaan prima otomatis.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/@lucide/web"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    borderWidth: {
+                        '3': '3px'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', '"Comic Neue"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+                    },
+                    colors: {
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Theme Initializer -->
+    <script>
+        const savedTheme = localStorage.getItem('math2_theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            if (!savedTheme) localStorage.setItem('math2_theme', 'light');
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans h-screen h-[100dvh] overflow-hidden flex flex-col transition-colors duration-300 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Background Orbs / Gradients -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-tr from-indigo-200/50 to-purple-200/50 dark:from-indigo-500/10 dark:to-purple-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-gradient-to-tr from-amber-200/50 to-indigo-200/50 dark:from-amber-500/10 dark:to-indigo-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Main Viewport Container -->
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-3 sm:px-6 py-3 flex flex-col flex-1 h-full min-h-0 overflow-hidden">
+        
+        <!-- Header Navigation -->
+        <header class="w-full flex items-center justify-between gap-2.5 p-2.5 sm:p-3.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm shrink-0 mb-3 relative z-30">
+            <div class="flex items-center gap-3 sm:gap-5 overflow-x-auto">
+                <a href="index.html" class="flex items-center gap-2 font-extrabold text-sm sm:text-base text-indigo-600 dark:text-indigo-400 shrink-0 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+                        <i data-lucide="calculator" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="font-extrabold text-slate-900 dark:text-white text-sm">Math Studio</span>
+                        <span class="text-[10px] text-slate-400 font-semibold hidden sm:inline">Media Belajar SD</span>
+                    </div>
+                </a>
+
+                <div class="h-6 w-px bg-slate-200 dark:bg-slate-800 shrink-0 hidden sm:block"></div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden sm:flex items-center gap-1.5">
+                    <a href="index.html" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Menu Utama
+                    </a>
+                    <a href="fpbkpk.html" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer bg-indigo-600 text-white shadow-sm shadow-indigo-500/30">
+                        <i data-lucide="git-fork" class="w-3.5 h-3.5 text-emerald-300"></i> FPB & KPK
+                    </a>
+                    <a href="pembagian.html" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i data-lucide="divide" class="w-3.5 h-3.5 text-purple-500"></i> Studio Pembagian
+                    </a>
+                    <a href="pengurangan.html" class="px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i data-lucide="minus" class="w-3.5 h-3.5 text-rose-500"></i> Studio Pengurangan
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Right Controls: Audio + Theme + View Switcher + Mobile Hamburger -->
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" id="bgmToggleBtn" title="BGM Musik Latar" class="p-2 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition cursor-pointer active:scale-95">
+                    <i data-lucide="music" class="w-4 h-4"></i>
+                </button>
+
+                <button type="button" id="soundToggleBtn" title="Efek Suara (SFX)" class="p-2 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition cursor-pointer active:scale-95">
+                    <i data-lucide="volume-2" class="w-4 h-4"></i>
+                </button>
+
+                <button type="button" id="themeToggleBtn" title="Mode Gelap/Terang" class="p-2 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition cursor-pointer active:scale-95">
+                    <i data-lucide="moon" class="w-4 h-4 hidden dark:inline"></i>
+                    <i data-lucide="sun" class="w-4 h-4 inline dark:hidden text-amber-500"></i>
+                </button>
+
+                <!-- Mobile View Switcher Button (Control vs Paper) -->
+                <button type="button" id="rightViewSwitcherBtn" title="Pindah Tampilan: Kontrol / Papan Visual" class="lg:hidden p-2 bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 rounded-xl border border-purple-200 dark:border-purple-800 transition cursor-pointer active:scale-95 flex items-center gap-1 font-bold text-xs">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    <span id="rightViewText" class="text-[11px] hidden sm:inline">Papan</span>
+                </button>
+
+                <button type="button" id="hamburgerBtn" title="Pindah Halaman" class="sm:hidden p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-xl border border-indigo-200 dark:border-indigo-800 transition cursor-pointer active:scale-95">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Tabs Component -->
+        <div class="flex lg:hidden items-center justify-center p-1 bg-slate-200/70 dark:bg-slate-800/80 rounded-xl mb-3 shrink-0">
+            <button type="button" id="mobileTabControl" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-800 shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Kontrol & Soal
+            </button>
+            <button type="button" id="mobileTabPaper" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition cursor-pointer">
+                <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i> Papan Visual
+            </button>
+        </div>
+
+        <!-- Main Viewport Area Grid -->
+        <main class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 flex-1 h-full min-h-0 overflow-hidden">
+            
+            <!-- Control Panel Component (Left lg:col-span-5) -->
+            <section id="fpbControlSection" class="lg:col-span-5 flex flex-col gap-3.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 sm:p-5 border border-slate-200/90 dark:border-slate-800 rounded-2xl shadow-sm overflow-y-auto flex-1 h-full min-h-0">
+                
+                <div class="flex items-center justify-between pb-1 border-b border-slate-100 dark:border-slate-800">
+                    <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                        <div class="p-1.5 bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg">
+                            <i data-lucide="sliders" class="w-4 h-4"></i>
+                        </div>
+                        <span>Kontrol Studio FPB & KPK</span>
+                    </h2>
+                    <span class="px-2.5 py-0.5 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-extrabold uppercase rounded-full border border-indigo-500/20">Pohon Faktor</span>
+                </div>
+
+                <!-- 1. Selection: Target Goal (FPB vs KPK) -->
+                <div class="flex flex-col gap-2 p-3.5 bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Pilih Target Perhitungan:</label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <button type="button" id="goal-btn-fpb" class="goal-btn py-2 px-3 rounded-xl text-xs font-extrabold bg-indigo-600 text-white shadow-xs border border-indigo-500 transition cursor-pointer flex items-center justify-center gap-1.5">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Target FPB
+                        </button>
+                        <button type="button" id="goal-btn-kpk" class="goal-btn py-2 px-3 rounded-xl text-xs font-bold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 transition cursor-pointer hover:bg-slate-50 flex items-center justify-center gap-1.5">
+                            <i data-lucide="zap" class="w-3.5 h-3.5 text-purple-500"></i> Target KPK
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Selection: Number Count (2, 3, 4) -->
+                <div class="flex flex-col gap-2 p-3.5 bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Jumlah Angka:</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" id="count-btn-2" class="count-btn py-1.5 px-3 rounded-xl text-xs font-extrabold bg-indigo-600 text-white shadow-xs border border-indigo-500 transition cursor-pointer">
+                            2 Angka
+                        </button>
+                        <button type="button" id="count-btn-3" class="count-btn py-1.5 px-3 rounded-xl text-xs font-bold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 transition cursor-pointer hover:bg-slate-50">
+                            3 Angka
+                        </button>
+                        <button type="button" id="count-btn-4" class="count-btn py-1.5 px-3 rounded-xl text-xs font-bold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 transition cursor-pointer hover:bg-slate-50">
+                            4 Angka
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Dynamic Inputs Container -->
+                <div class="flex flex-col gap-2 p-3.5 bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Input Nilai Angka:</label>
+                    <div id="dynamicNumbersContainer" class="grid grid-cols-2 gap-2.5 pt-1">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Quick Live Calculation Badge -->
+                <div class="mt-auto p-4 bg-indigo-50/80 dark:bg-indigo-950/40 border-2 border-indigo-500/30 rounded-2xl flex flex-col gap-2.5 shadow-2xs">
+                    <span class="text-xs font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                        <i data-lucide="calculator" class="w-4 h-4 text-indigo-500"></i> Hasil Perhitungan Ditargetkan:
+                    </span>
+                    <div id="summaryBadge" class="flex items-center gap-2.5 text-xs font-bold flex-wrap">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Visual Canvas Component (Right lg:col-span-7) -->
+            <section id="fpbCanvasSection" class="lg:col-span-7 flex flex-col bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 sm:p-6 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-y-auto flex-1 h-full min-h-0">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-4 shrink-0">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </div>
+                        <h2 class="text-base font-extrabold text-slate-900 dark:text-white">Papan Visual Studio FPB & KPK</h2>
+                    </div>
+                    <span class="text-xs text-slate-400 font-bold">Realtime Visualizer</span>
+                </div>
+
+                <!-- Output Container for Methods -->
+                <div id="visualCanvasOutput" class="flex-1 overflow-y-auto pr-1">
+                    <!-- Rendered via JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenuDrawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex flex-col justify-end sm:hidden transition-all duration-300">
+        <div class="bg-white dark:bg-slate-900 border-t-2 border-indigo-500 rounded-t-3xl p-5 flex flex-col gap-4 shadow-2xl animate-step-row">
+            
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold">
+                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                    </div>
+                    <span class="font-extrabold text-sm text-slate-900 dark:text-white">Pindah Halaman</span>
+                </div>
+                <button type="button" id="closeMobileDrawerBtn" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg cursor-pointer font-bold text-base">
+                    ✕
+                </button>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <a href="index.html" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="layout-grid" class="w-4 h-4"></i> Menu Utama (Portal)
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+                <a href="fpbkpk.html" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition bg-indigo-600 text-white shadow-md">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="git-fork" class="w-4 h-4 text-emerald-300"></i> Studio FPB & KPK
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+                <a href="pembagian.html" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="divide" class="w-4 h-4 text-purple-500"></i> Studio Pembagian
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+                <a href="pengurangan.html" class="p-3 rounded-xl font-extrabold text-sm flex items-center justify-between transition bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="minus" class="w-4 h-4 text-rose-500"></i> Studio Pengurangan
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/fpbkpk.js"></script>
+</body>
+</html>
